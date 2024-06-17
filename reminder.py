@@ -27,7 +27,6 @@ def find_match(time, operator, time_delta):
             time -= delta
     return found_match
 
-
 def message():
     """message for the ephem notification. this is only very rough function and needs to be worked on more"""
     if current_time < window_start:
@@ -38,7 +37,6 @@ def message():
 # calculations of needed values for notification
 current_time = datetime.now()
 window_start = find_match(find_match(find_match(current_time, "+", "days"), "+", "hours"), "+", "minutes")
-print(window_start)
 window_end = find_match(find_match(find_match(window_start + timedelta(days=5), "-", "days"), "-", "hours"), "-", "minutes")
 remaining_window = window_end - current_time
 time_till_window_start = window_start - current_time
