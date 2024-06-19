@@ -2,8 +2,8 @@ from win11toast import toast
 from datetime import datetime, timedelta
 import ephem
 
-def find_match(time, operator, time_delta):
-    """find and return closest date where moon constellation is leo and in waxing phase. you can go backwards or forwards from entered datetime value by selecting operator and increase precision with timedelta increment setting"""
+def find_match(date_time, operator, time_delta):
+    """find and return closest date -1 timedelta where the moon is in waxing phase, and in leo constellation. you can go backwards or forwards from entered datetime value by selecting operator and increase precision with timedelta increment setting"""
     m = ephem.Moon()
     
     time_deltas = {
@@ -16,34 +16,34 @@ def find_match(time, operator, time_delta):
 
     found_match = ""
     while found_match == "":
-        m.compute(time)
+        m.compute(date_time)
         constellation = ephem.constellation(m)
         moon_phase = m.phase
         if constellation[1] == "Leo" and (moon_phase > 0 and moon_phase < 50):
-            found_match = time - delta # i am subtracting delta because i don't want to overshoot start of the window
+            found_match = date_time - delta # i am subtracting delta because i don't want to overshoot start of the window
         if operator == "+":
-            time += delta
+            date_time += delta
         elif operator == "-":
-            time -= delta
+            date_time -= delta
     return found_match
 
 def message():
-    """message for the ephem notification. this is only very rough function and needs to be worked on more"""
-    if current_time < window_start:
-        return (f"not a good time for a haircut\nnext window will start in: {time_till_window_start}\non: {window_start}")
-    elif current_time >= window_start:
-        return (f"moon is in leo and it is growing!\nyou can cut your hair till {window_end}, which is {remaining_window}")
+    """message for the toast notification"""
+    if time_till_window_start < timedelta(days=20) and window_start > current_time:
+        return (f"Najbližší rastúci mesiac v levovi začne:\n{window_start.strftime('%d/%m/%Y o %H:%M')}")
+    elif current_time >= window_start and current_time <= window_end:
+        return (f"Mesiac rastie a je v levovi do:\n{window_end.strftime('%d/%m/%Y, %H:%M')}")
 
 # calculations of needed values for notification
 current_time = datetime.now()
 window_start = find_match(find_match(find_match(current_time, "+", "days"), "+", "hours"), "+", "minutes")
 window_end = find_match(find_match(find_match(window_start + timedelta(days=5), "-", "days"), "-", "hours"), "-", "minutes")
-remaining_window = window_end - current_time
+# remaining_window = window_end - current_time
 time_till_window_start = window_start - current_time
 
 message = message()
-# toast(message)
-print(message)
+
+if message:
+    toast(message, duration="long")
 
 
- 
