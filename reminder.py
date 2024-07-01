@@ -41,7 +41,7 @@ def message():
 
 # calculations of needed values for notification
 current_date_time = datetime.now()
-window_start = find_match(find_match(find_match(current_date_time, "+", "days"), "+", "hours"), "+", "minutes")
+window_start = find_match(find_match(find_match(current_date_time - timedelta(days=5), "+", "days"), "+", "hours"), "+", "minutes")
 window_end = find_match(find_match(find_match(window_start + timedelta(days=5), "-", "days"), "-", "hours"), "-", "minutes")
 time_till_window_start = window_start - current_date_time
 
