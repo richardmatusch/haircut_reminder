@@ -1,11 +1,6 @@
 from win11toast import toast
 from datetime import datetime, timedelta
 import ephem
-import os
-
-# getting the script directory and setting up the icon for the notification. code assumes that the icon is in the same folder as python file
-script_dir = os.path.dirname(__file__)
-icon_path = os.path.join(script_dir, "lion.png") # <a href="https://www.flaticon.com/free-icons/lion" title="lion icons">Lion icons created by Freepik - Flaticon</a>
 
 def find_match(date_time, operator, time_delta):
     """find and return closest date -1 timedelta where the moon is in waxing phase, and in leo constellation. you can go backwards or forwards from entered datetime value by selecting operator and increase precision with timedelta increment setting"""
@@ -48,6 +43,7 @@ time_till_window_start = window_start - current_date_time
 message = message()
 
 if message:
-    toast(message, icon=icon_path, scenario="incomingCall")
+    # set the path for your icon...
+    toast(message, icon=r'C:\path\to\your\icon\lion.png', scenario="incomingCall")
 
 
