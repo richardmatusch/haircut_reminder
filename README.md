@@ -2,7 +2,7 @@
 
 ## **Overview:**
 
-- toast notification that will pop up after booting up the computer, informing user about current/approaching moon in leo and in waxing phase
+Toast notification that will pop up after booting up the computer, informing user about current/approaching moon in leo and in waxing phase
 
 <img src="https://github.com/user-attachments/assets/451dd7d1-5a02-41bd-bf69-f407bd841c1c" width="400" height="220">
 
