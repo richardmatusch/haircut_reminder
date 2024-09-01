@@ -19,7 +19,8 @@ def find_match(date_time, operator, time_delta):
         m.compute(date_time)
         constellation = ephem.constellation(m)
         moon_phase = m.phase
-        if constellation[1] == "Leo" and (moon_phase > 0 and moon_phase < 50):
+        # here is a mistake... moonphase condition is in correct percentage but it is not reflecting on whether the moon is in waxing or waning phase...
+        if constellation[1] == "Leo" and (moon_phase > 0 and moon_phase < 100):
             found_match = date_time - delta # i am subtracting delta because i don't want to overshoot start of the window
         if operator == "+":
             date_time += delta
